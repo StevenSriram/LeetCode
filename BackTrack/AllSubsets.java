@@ -11,7 +11,7 @@ class Solution {
         return res;
     }
 
-    public void backTrack(int i, int[] nums, List<Integer>  subset)
+    public void backTrack(int i, int[] nums, List<Integer> subset)
     {
         if(i == nums.length)
         {
