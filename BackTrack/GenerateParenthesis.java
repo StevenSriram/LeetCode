@@ -1,32 +1,48 @@
 class Solution {
-    public List<String> generateParenthesis(int n) {
-        List<String> res = new ArrayList<>();
-        
-        // parenthesis, no. pair, open, close, result
-        backTrack("", n, 0, 0, res);
+    // all Parentheses of n
+    List<String> res;
+
+    public List<String> generateParenthesis(int n) 
+    {
+        res = new ArrayList<>();
+
+        // generate parentheses (open, close, no.Pairs, parentheses)
+        backTrack(0, 0, n, new StringBuilder());
 
         return res;
     }
 
-    void backTrack(String s, int n, int open, int close, List<String> res)
+    public void backTrack(int open, int close, int n, StringBuilder sb)
     {
-        // Parenthesis generated
-        if(s.length() == n*2)
+        // Parenthesis generated { ( + ) = 2 * No.Pairs }
+        if(sb.length() == 2 * n)
         {
-            res.add(s);
+            /* .toString create new String Object  
+                    doesn't affected by append, delete int StringBuilder */
+            res.add(sb.toString());
             return;
         }
 
-        // open '('  <  no. pair
+        // only Open Parentheses upto n times {open < n}
         if(open < n)
         {
-            backTrack(s+"(", n, open+1, close, res);
+            // add '(' increase open count
+            sb.append('(');
+            backTrack(open+1, close, n, sb);
+
+            // BackTrack : remove '(' parentheses
+            sb.deleteCharAt(sb.length() - 1);
         }
 
-        // open '('  <  close ')'
-        if(close < open)
+        // add Closing Parentheses to Match Open Parentheses {open > close}
+        if(open > close)
         {
-            backTrack(s+")", n, open, close+1, res);
+            // add ')' increase close count
+            sb.append(')');
+            backTrack(open, close+1, n, sb);
+
+            // BackTrack : remove ')' parentheses
+            sb.deleteCharAt(sb.length() - 1);
         }
     }
 }

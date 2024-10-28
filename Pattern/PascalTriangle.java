@@ -1,44 +1,75 @@
-package Pattern;
-
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
- * 
  *	Pascal's Triangle is a triangular array of the binomial coefficients.
  *	It has many important properties and applications in combinatorics, algebra, and geometry.
- */
+*/
 
 public class PascalTriangle {
 
-	static void pascal(int n) 
-	{
-		for(int line=1; line<=n; line++)
-		{
-			for(int j=line; j<n; j++)
-				System.out.print(" ");
-			
-			int num = 1;
-			for(int j=1; j<=line; j++)
-			{
-				System.out.print(num + " ");
-				/*
-				 *  C(line,i) = C(line,i) × line−i / i
-				 */
-				num = num * (line - j)/j;
-			}
-			System.out.println();
-		}
-	}
-	
 	public static void main(String[] args)
 	{
 		Scanner s = new Scanner(System.in);
-		System.out.print("Enter : ");
-		int n  = s.nextInt();
 		
-		pascal(n);
+		// generate particular row , col
+//		System.out.print("Enter Row & Col : ");
+//		int n = s.nextInt(), r = s.nextInt();
+//		System.out.println(nCr(n-1, r-1));
+		
+		
+		// generate full row
+//		System.out.print("Enter Nth Row : ");
+//		int n  = s.nextInt();
+//		System.out.println(pascalRow(n));
+		
+		// generate Pascal Triangle
+		System.out.print("Enter Rows : ");
+		int n  = s.nextInt();
+		printPascal(n);
+		
 		
 		s.close();
 	}
+	
+	public static void printPascal(int n) 
+	{
+		for(int i=1; i<=n; i++)
+			System.out.println(pascalRow(i));
+	}
 
+	public static long nCr(int n, int r) 
+	{
+		/*
+		 	r-1 C c-1 = value of Pascal triangle at Specific Index
+		 	
+		 	nCr = n! / r! * (n-r)!
+		 	
+		 	7C2 = 7x6 / 1x2 => (n-r)! cancel out
+		*/
+		long ans = 1;
+		for(int i=0; i<r; i++)
+		{
+			ans *= (n - i);
+			ans /= (i + 1); 
+		}
+		return ans;
+	}
+
+	public static String pascalRow(int n) 
+	{
+		int[] arr = new int[n];
+		arr[0] = 1;
+		
+		int ans = 1;
+		for(int i=1; i<n; i++)
+		{
+			ans *= (n-i);
+			ans /= i;
+			arr[i] = ans;
+		}
+		
+		return Arrays.toString(arr);
+	}
+	
 }

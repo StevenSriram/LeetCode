@@ -1,7 +1,23 @@
 class Solution {
-    public int rob(int[] nums) {
-        // Dynamic Programming
+    public int rob(int[] nums) 
+    {
+        // only One House return itSelf - skiping both first & last
+        if(nums.length == 1)
+            return nums[0];
 
+        /*
+             robbery from start_House to skipping last_House
+             robbery from skipping start_Houe till last_House
+        */
+        return Math.max(
+            robHelper(nums, 0, nums.length-1),
+            robHelper(nums, 1, nums.length)
+        );
+    }
+
+    // House Robber - breaking of Sub-Problem based on two previous Robbery 
+    public int robHelper(int[] nums, int start, int end)
+    {
         /*
             Rob1 - Maxmium ROB until prev-prev house (2-step previous)
             Rob2 - Maxmium ROB until prev house (1-step previous)

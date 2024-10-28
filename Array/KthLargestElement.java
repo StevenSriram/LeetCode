@@ -1,22 +1,31 @@
 class Solution {
-    public int findKthLargest(int[] nums, int k) {
+    public int findKthLargest(int[] nums, int k) 
+    {
         /*
-            Quick Select Algorithm ( Quick Sort )
-            Average Case : Θ(n) / Worst Case : O(n2)
+            Randomized Quick Select Algorithm ( Quick Sort )
+            Guarantied Average Case : Θ(n logn)
         */
         if(k == 50000) return 1;
-        
+
         // Kth Largest Index
         k = nums.length - k;
 
-        return quickSelect(nums, 0, nums.length-1, k);
+        // QuickSelect(nums, left, right, k)
+        return quickSelect(nums, 0, nums.length-1, k);   
     }
 
-    public int quickSelect(int[] nums, int l, int r, int k)
+    public int partition(int[] nums, int l, int r)
     {
-        // pivot Last Index
-        int pivot = nums[r];
-        // pointer to Start Index
+        Random rand = new Random();
+
+        // random pivot Index b/w Left and Right
+        int pivotIdx = rand.nextInt(r - l + 1) + l;
+        int pivot = nums[pivotIdx];
+
+        // move Pivot to Right
+        swap(nums, pivotIdx, r);
+
+        // Pointer to partition
         int p = l;
 
         for(int i = l; i < r; i++)
@@ -25,19 +34,25 @@ class Solution {
             if(nums[i] <= pivot)
             {
                 // swap Current and Pointer
-                int temp = nums[i];
-                nums[i] = nums[p];
-                nums[p] = temp;
+                swap(nums, p, i);
 
                 // increase Pointer
                 p++;
             }
         }
-        // swap Pivot and Pointer
-        nums[r] = nums[p];
-        nums[p] = pivot;
 
-        // k lesser than Pointer - LEFT
+        // swap Pivot and Pointer
+        swap(nums, p, r);
+
+        return p;
+    }
+
+    public int quickSelect(int[] nums, int l, int r, int k)
+    {
+        // Partition array based on Random Pivot
+        int p = partition(nums, l, r);
+
+         // k lesser than Pointer - LEFT
         if(k < p)
         {
             return quickSelect(nums, l, p-1, k);
@@ -52,6 +67,13 @@ class Solution {
         {
             return nums[p];
         }
+    }
+    
+    public void swap(int[] nums, int i, int j)
+    {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
 

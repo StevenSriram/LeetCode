@@ -1,11 +1,13 @@
 class Solution {
-    // Result Letter Combinations
+    /* Time Complexity : O(4^n) {phone Numbers - 4 char}*/
+    // all Letter Combination of Phone Numbers
     List<String> res;
 
     // Phone Number Table
     Map<Character, String> phNo;
 
-    public List<String> letterCombinations(String digits) {
+    public List<String> letterCombinations(String digits) 
+    {
         res = new ArrayList<>();
 
         phNo = new HashMap<>();
@@ -19,27 +21,32 @@ class Solution {
         phNo.put('9', "wxyz");
 
         // check for empty Digits
-        if(digits.length() != 0)
-            backTrack(0, "", digits);
+        if(!digits.isEmpty())
+            backTrack(0, digits, new StringBuilder());
 
         return res;
     }
 
-    void backTrack(int i, String curStr, String digits)
+    void backTrack(int i, String digits, StringBuilder sb)
     {
-        // CurString length = Digits length
-        if(curStr.length() == digits.length())
-        {
-            // add letter
-            res.add(curStr);
+        // i equals length of digits - One Combination
+       if(i == digits.length())
+       {
+            res.add(sb.toString());
             return;
-        }
+       }
 
-        // for each char Phone Number
-        for(char c : phNo.get(digits.charAt(i)).toCharArray())
-        {
-            // BackTrack( nextIndex, curStr + char ) 
-            backTrack(i + 1, curStr + c, digits);
-        }
+       // take char for PhoneNumber 
+       for(char c : phNo.get(digits.charAt(i)).toCharArray())
+       {
+            // use cur Char
+            sb.append(c);
+
+            // use next Char
+            backTrack(i+1, digits, sb);
+
+            // BackTrack : remove lastly used Char
+            sb.deleteCharAt(sb.length() - 1);
+       }
     }
 }

@@ -1,31 +1,57 @@
 class Solution {
-    public List<List<Integer>> permute(int[] nums) {
-        // all permutations
-        List<List<Integer>> perms = new ArrayList<>();
-        // intialize with Empty Permutation
-        perms.add(new ArrayList<>());
+    /* Time Complexity : O(n!) */
+    List<List<Integer>> res;
 
-        // take each number
+    public List<List<Integer>> permute(int[] nums) 
+    {
+        // All Permuations of nums
+        res = new ArrayList<>();
+
+        //  BackTracking - generate all permuations
+        backTrack(nums, new LinkedList<>());
+
+        return res;
+    }
+
+    // Recursive Tree
+    /*
+                          (1,2,3) (2,3) (3)
+        Permuations Math :  _3_   _2_   _1_ 
+
+                           []
+
+              [1]          [2]           [3]
+
+         [1,2]  [1,3]  [2,1]  [2,3]  [3,1]  [3,2]
+
+      [1,2,3] [1,3,2] [2,1,3] [2,3,1] [3,1,2] [3,2,1]
+    */
+
+    public void backTrack(int[] nums, List<Integer> cur)
+    {
+        // size of current equals num - One Permuation
+        if(cur.size() == nums.length)
+        {
+            // add copy of Cur ( Avoid passing reference )
+            res.add(cur.stream().toList());
+            return;
+        }
+
+        // iterating through Every nums
         for(int n : nums)
         {
-            // current updated Permutations
-            List<List<Integer>> newPerms = new ArrayList<>();
-
-            // take every permuations
-            for(List<Integer> p : perms)
+            // not in current perm
+            if(!cur.contains(n))
             {
-                // insert at the every position of existing Permutaions
-                for(int i=0; i<=p.size(); i++)
-                {
-                    List<Integer> copy = new ArrayList<>(p);
-                    copy.add(i, n);
-                    // add to current Permutaions
-                    newPerms.add(copy);
-                }
+                // add to cur perm
+                cur.add(n);
+
+                // add next nums to Perm
+                backTrack(nums, cur);
+
+                // backTrack : remove lastly add nums from cur Perm
+                cur.remove(cur.size()-1);
             }
-            // update with  new Permuation
-            perms = newPerms;
         }
-        return perms;
     }
 }

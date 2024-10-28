@@ -4,36 +4,36 @@
  *     int val;
  *     ListNode next;
  *     ListNode(int x) {
- *         val = /**
- * Definition for singly-linked list.
- * class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
  *         val = x;
  *         next = null;
  *     }
  * }
  */
 public class Solution {
-    public boolean hasCycle(ListNode head) {
-        // slow - fast Pointer
+    public boolean hasCycle(ListNode head) 
+    {
+        // Empty List | One Node - No Cycle
+        if(head == null || head.next == null)    
+            return false;
+
+        // Fast - Slow Pointer ( Floyd's Cycle )
         ListNode slow = head;
-        ListNode fast = head.next;
+        ListNode fast = head;
 
-        while(slow != fast)
+        // check for End of Linked List
+        while(fast != null && fast.next != null)
         {
-            // no Cycle if null
-            if(fast == null || fast.next == null)
-                return false;
-            
-            // slow 1 step
+            // Slow - one Step
             slow = slow.next;
-
-            // fast 2 step
+            // Fast - two Step
             fast = fast.next.next;
+
+            // Cycle exits (slow equals fast)
+            if(slow == fast)
+                return true;
         }
-        // Cycle exits
-        return true;
+
+        // No Cycle exists
+        return false;
     }
 }

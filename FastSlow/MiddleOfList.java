@@ -9,22 +9,22 @@
  * }
  */
 class Solution {
-    public ListNode middleNode(ListNode head) {
-        // Slow - Fast Pointers
+    public ListNode middleNode(ListNode head) 
+    {
+        // Fast - Slow Pointer 
         ListNode slow = head;
-        ListNode fast = head.next;
+        ListNode fast = head;
 
-        // fast not NULL
-        while(fast != null)
+        // Fast - points to End , Slow - is at Middle
+        while(fast != null && fast.next != null)
         {
+            // Slow - one Step
             slow = slow.next;
-            fast = fast.next;
-
-            // handle Odd Case and Even (second middle) Case
-            if(fast != null)
-                fast = fast.next;
+            // Fast - two Step
+            fast = fast.next.next;
         }
-        // slow is Middle of Linked List
+
+        // Middle of Linked List
         return slow;
     }
 }

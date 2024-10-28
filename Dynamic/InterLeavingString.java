@@ -1,40 +1,48 @@
 class Solution {
-    public boolean isInterleave(String s1, String s2, String s3) {
-        int l1 = s1.length(), l2 = s2.length();
-        int l3 = s3.length();
+    public boolean isInterleave(String s1, String s2, String s3) 
+    {
+        int n = s1.length(), m = s2.length();
 
-        // not InterLeaving
-        if(l1 + l2 != l3)
+        // Length of Interleaved Strings doesn't matches
+        if(n + m != s3.length())
             return false;
 
-        // Dynamic Programming Table
-        boolean dp[][] = new boolean[l1 + 1][l2+ 1];
-        dp[l1][l2] = true;
-        
+        //  extra Space at End for handling OutOfBound Case
+        boolean[][] dp = new boolean[n + 1][m + 1];
+
+        // both String reaches OutOfBounds - InterLeaved
+        dp[n][m] = true;
+
         /*
-            s1 : i  \   s2 : j
-                s3 : i + j      // length S3 = len S1 + len S2
+            i - Str1    
+                        => ( i + j ) - Str3
+            j - Str2 
         */
 
-        // start from End
-        for(int i = l1; i >= 0; i--)
+        // Bottom Up - Dynamic Programming Table : 
+        for(int i = n; i >= 0; i--)        
         {
-            for(int j = l2; j>=0; j--)
+            for(int j = m; j >=0 ; j--)
             {
-                // from till Matches on S1
-                if(i < l1 && s1.charAt(i) == s3.charAt(i+j) && dp[i+1][j])
-                {
-                    dp[i][j] = true;
-                }
+                /*
+                    i in Bounds
+                    char(i) of str1 matches str3(i+j)
+                    check char AFTER this as interleaved
+                */
+                if(i < n && s1.charAt(i) == s3.charAt(i + j) && dp[i + 1][j])
+                    dp[i][j] = dp[i + 1][j];
 
-                // from till Matches on S2
-                if(j < l2 && s2.charAt(j) == s3.charAt(i+j) && dp[i][j+1])
-                {
-                    dp[i][j] = true;
-                }
+                 /*
+                    j in Bounds
+                    char(j) of str1 matches str3(i+j)
+                    check char AFTER this as interleaved
+                */
+                if(j < m && s2.charAt(j) == s3.charAt(i + j) && dp[i][j + 1])
+                    dp[i][j] = dp[i][j + 1];
             }
         }
-        // InterLeaved String
+
+        // return all string are Interleaved
         return dp[0][0];
     }
 }
