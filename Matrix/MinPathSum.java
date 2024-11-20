@@ -1,32 +1,42 @@
 class Solution {
-    public int minPathSum(int[][] grid) {
-        int r = grid.length, c = grid[0].length;
+    // Similar to Unique Path
+    public int minPathSum(int[][] grid) 
+    {
+        // m - ROW   &   n - COL
+        int m = grid.length, n = grid[0].length;
 
-        for(int i=0; i<r; i++)
+        // DP - of Row , every time we depend on Prev Row only
+        int[] dp = new int[n];
+
+        // intialize with Maximum Value
+        Arrays.fill(dp, Integer.MAX_VALUE);
+
+        // Last value - 0 (Not Path)
+        dp[n - 1] = 0;
+
+        // Reverse Grid in Reverse Order
+        for(int r = m-1; r >= 0; r--)
         {
-            for(int j=0; j<c; j++)
+            // In each iteration the Down Value is stored in DP itself
+            for(int c = n-1; c >= 0; c--)
             {
-                // ignore (0, 0) grid
-                if(i == 0 && j == 0)
-                    continue;
+                // check if column is not at end - move Down, Right
+                if(c + 1 < n)
+                {
+                    // MIN( Down, Right )  + Grid[value]
+                    dp[c] = grid[r][c] + Math.min(dp[c] , dp[c + 1]);
+                }
 
-                // left and down - infinity
-                int leftPath, downPath;
-                leftPath = downPath = Integer.MAX_VALUE;
-
-                // DownSide Sum
-                if(i != 0)
-                    downPath = grid[i][j] + grid[i-1][j];
-
-                // LeftSide Sum
-                if(j != 0)
-                    leftPath = grid[i][j] + grid[i][j-1];
-
-                // min Path Sum
-                grid[i][j] = Math.min(leftPath, downPath);
+                // column End - can't move to Right
+                else
+                {
+                    // only Down + Grid[value]
+                    dp[c] = grid[r][c] + dp[c];
+                }
             }
         }
-        // Optimal Time : O(m x n)  Space : O(1)
-        return grid[r-1][c-1];
+
+        // Minimum to Reach END
+        return dp[0];
     }
 }
