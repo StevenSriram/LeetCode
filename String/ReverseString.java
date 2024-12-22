@@ -1,16 +1,20 @@
-class Solution 
-{
+class Solution {
     public void reverseString(char[] s) 
     {
-        int i = 0,j = s.length;
-        while(i < j)
+        // Two Pointers - L, R
+        int l = 0, r = s.length - 1;
+
+        // Not Cross Over
+        while(l < r)    
         {
-            char temp = s[i];
-            s[i] = s[--j];
-            s[j] = temp;
-            i++;
+            // Swap (L , R)
+            char temp = s[l];
+            s[l] = s[r];
+            s[r] = temp;
+
+            // move Pointers
+            l++;
+            r--;
         }
-        System.out.println(s);
-        
     }
 }

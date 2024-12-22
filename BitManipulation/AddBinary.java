@@ -1,53 +1,41 @@
 class Solution {
     public String addBinary(String a, String b) 
     {
-        // Integer representation of Two Binary Strings
-        int num1 = Integer.parseInt(a, 2);
-        int num2 = Integer.parseInt(b, 2);
+        // Index of String A,B
+        int i = a.length() - 1;
+        int j =  b.length() - 1;
 
-        /*
-            num1 - 101 (5)      num2 - 110 (6)
+        // result - Added Binary 
+        StringBuilder sb = new StringBuilder();
 
-            num1 => 
-                    101
-                    110 ^
-                    011
+        // carry of each Bit
+        int carry = 0;
 
-            num2 => 
-                    101
-                    110 &
-                    100
-
-                    100 << 1 = 1000
-
-            num1 => 
-                    0011
-                    1000 ^
-                    1011
-
-            num2 => 
-                    0011
-                    1000 &
-                    0000
-
-                    0000 << 1 = 0000
-    
-            Add = 1011 (11)
-        */
-
-        while(num2 != 0)
+        // A, B char Exists OR carry Exits
+        while(i >= 0 || j >= 0 || carry > 0)
         {
-            // Ex-OR of numbers = adding two number without Carry 
-            int withOutCarry = num1 ^ num2;
+            // add sum to previous Carry
+            int sum = carry;
 
-            // AND of numbers and Left-Shift = adding two number only Carry 
-            int onlyCarry = (num1 & num2) << 1;
+            // char Exits in A String - add
+            if(i >= 0)
+                sum += a.charAt(i) - '0';
 
-            num1 = withOutCarry;
-            num2 = onlyCarry;
+            // char Exits in B String - add
+            if(j >= 0)
+                sum += b.charAt(j) - '0';
+
+            // Carry = Remaing After Last Bit [sum / 2]
+            carry = sum / 2;
+
+            // Insert Last Bit [sum % 2]
+            sb.insert(0, sum % 2);
+
+            // move Bits
+            i--;
+            j--;
         }
 
-        // binary of Addition of Numbers
-        return Integer.toBinaryString(num1);
+        return sb.toString();
     }
 }
