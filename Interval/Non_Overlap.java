@@ -1,8 +1,13 @@
 class Solution {
     public int eraseOverlapIntervals(int[][] intervals) 
     {
-        // Sort the Interval based on Start
-        Arrays.sort(intervals, (i, j) -> i[0] - j[0]);
+        /*
+            Sorting by End ensures choosing the interval that 
+            leaves the most room for future intervals.
+        */
+
+        // Sort the Interval based on End
+        Arrays.sort(intervals, (i, j) -> i[1] - j[1]);
 
         int minRemove = 0;
 
@@ -17,11 +22,6 @@ class Solution {
             {
                 // need to remove Interval
                 minRemove++;
-
-                /* Min has Less chance of Overlap */
-
-                // update with Minimum of both End
-                prevEnd = Math.min(prevEnd, intervals[i][1]);
             }
             else
             {
