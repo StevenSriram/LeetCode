@@ -9,7 +9,7 @@ class Solution {
         res = new ArrayList<>();
 
         // backTrack ( index, curCombination, curTotal )
-        backTrack(0, new LinkedList<>(), 0, candidates, target);
+        backTrack(0, new ArrayList<>(), 0, candidates, target);
 
         return res;
     }

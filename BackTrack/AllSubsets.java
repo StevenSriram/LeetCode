@@ -8,7 +8,7 @@ class Solution {
         res = new ArrayList<>();
 
         // start BackTrack from 0 index
-        backTrack(0, nums, new LinkedList<>());
+        backTrack(0, nums, new ArrayList<>());
 
         return res;
     }
@@ -22,7 +22,7 @@ class Solution {
             res.add(subset.stream().toList());
             return;
         }
-        //Recursive Tree - Ecah Level deals with Inclusion & Exclusion of num
+        //Recursive Tree - Each Level deals with Inclusion & Exclusion of num
         /*
                                          []
 
