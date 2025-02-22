@@ -1,4 +1,10 @@
 class Solution {
+    /*
+        Top Left to Bottom Right - UNIQUE PATH
+
+        Top Right to Bottom Left
+            - Reverse each Row now it becomes Normal UNIQUE PATH
+    */
     public int uniquePathsWithObstacles(int[][] obstacleGrid) 
     {
         // We can Only move ( Right and Down )

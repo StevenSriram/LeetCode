@@ -1,6 +1,3 @@
-package dynamicP;
-
-
 class Solution {
 	public int longestCommonSubstring(String text1, String text2)  
 	{
