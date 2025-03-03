@@ -1,5 +1,14 @@
 class Solution {
     // Monotonic-Stack
+
+    /*
+        For single Array, store Index into stack,
+
+        compare nums[i] > nums[stack.peek()]
+            res[stack.pop()] = nums[i]
+        push (i) to stack
+    */
+
     public int[] nextGreaterElement(int[] nums1, int[] nums2) 
     {
         // Hash Map to track { Element : Index }
