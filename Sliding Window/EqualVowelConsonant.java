@@ -1,16 +1,14 @@
 public class Solution {
-    public int equalCountVowelsConsonants(String s) {
-        // Fixed Size Sliding Window (N)
-        int n = s.length();
-
+    /* Fixed Size Sliding Window (k) */
+    public int equalCountVowelsConsonants(String s, int k) {
         // Vowels++     Consonants--
         int balance = 0;
         
         // Equal Vowels and Consonants
         int count = 0;
 
-        // Initial Window N
-        for (int i = 0; i < n; i++) {
+        // Initial Window k
+        for (int i = 0; i < k; i++) {
             // Vowel : balance++
             if(isVowel(s.charAt(i))) 
                 balance++;
@@ -25,9 +23,9 @@ public class Solution {
             count++;
 
         // Slide the Window
-        for (int i = n; i < s.length(); i++) {
+        for (int i = k; i < s.length(); i++) {
             // remove the first Char
-            balance += isVowel(s.charAt(i - N)) ? 1 : -1;
+            balance += isVowel(s.charAt(i - k)) ? -1 : 1;
 
             // add the next Char
            if(isVowel(s.charAt(i))) 

@@ -35,7 +35,8 @@ class Solution {
             if(i + 1 < n)
             {
                 // Turn into Number : Substring(i, i + 2)
-                int num = Integer.parseInt(s.substring(i ,i + 2));
+                int num = (s.charAt(i) - '0') * 10
+                            + (s.charAt(i+1) - '0');
 
                 // valid Two Digit Number
                 if(num >= 10 && num <= 26)
